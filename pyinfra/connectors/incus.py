@@ -51,6 +51,7 @@ class IncusConnector(BaseConnector):
 
     local: LocalConnector
     # NOTE: I copied all this local stuff from ./docker.py
+    # Maybe ./util.py would have been better
 
     incus_instance: str
     latest_info: str = ""
@@ -78,6 +79,17 @@ class IncusConnector(BaseConnector):
         with progress_spinner({f"obtainining Incus info for: {self.incus_instance}"}):
             try:
                 self.info = local.shell(f"incus info {self.incus_instance}")
+                # TODO: try run_local_process
+                """
+                if print_input:
+                    click.echo("{0}>>> {1}".format(self.host.print_prefix, rsync_command), err=True)
+
+                return_code, output = run_local_process(
+                    rsync_command,
+                    print_output=print_output,
+                    print_prefix=self.host.print_prefix,
+                )
+                """
             except BaseException as err:
                 raise ConnectError(f"{err}")
 
